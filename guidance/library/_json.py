@@ -241,6 +241,12 @@ def _gen_json(
     json_schema: Mapping[str, Any],
     definitions: Mapping[str, Callable[[], GrammarFunction]],
 ):
+    ONEOF_STRING = "oneOf"
+    if ONEOF_STRING in json_schema:
+        return lm + _process_anyOf(
+            anyof_list=json_schema[ONEOF_STRING], definitions=definitions
+        )
+
     ANYOF_STRING = "anyOf"
     if ANYOF_STRING in json_schema:
         return lm + _process_anyOf(
