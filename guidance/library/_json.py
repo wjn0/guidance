@@ -303,6 +303,10 @@ def _gen_json(
     if CONST_STRING in json_schema:
         return lm + _to_compact_json(json_schema[CONST_STRING])
 
+    METADATA_STRINGS = {"description"}
+    if len(json_schema.keys() - METADATA_STRINGS) == 0:
+        return lm + _gen_json_object(properties=None, additional_properties=None, definitions=definitions)
+
     raise ValueError(f"Can't process JSON node: {json_schema}")
 
 
